@@ -1,10 +1,16 @@
 const express = require('express')
 // To be able to use Environmental variables. I will create .env file to store Evironmental variables
 const dotenv = require('dotenv').config()
+// for styling
+const colors = require('colors')
+const connectToMongoDB = require('./config/db')
 // Server port
 const PORT = process.env.PORT
 // Custom Error handler for Routes
 const { errorHandler } = require('./middleware/errorHandler')
+
+// Connecting to MongoDB
+connectToMongoDB()
 
 // Initialising app variable
 const app = express()

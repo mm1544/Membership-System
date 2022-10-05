@@ -6,7 +6,7 @@ const errorHandler = (err, req, res, next) => {
   // Adding message and error stack to the response
   res.json({
     message: err.message,
-    // Error stack is displayed only in production
+    // Error stack is displayed only in Production
     stack: process.env.NODE_ENV == 'production' ? null : err.stack,
   })
 }

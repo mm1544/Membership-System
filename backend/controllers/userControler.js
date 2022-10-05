@@ -38,4 +38,4 @@ module.exports = {
   loginUser,
 }
 
-// Will add data to the http request's Body to send when register and login routes are trigered.
+// TO DO: Will add data to the http request's Body to send when register and login routes are trigered.
