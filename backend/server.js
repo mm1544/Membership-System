@@ -15,13 +15,13 @@ connectToMongoDB()
 // Initialising app variable
 const app = express()
 
-// It will allow to send 'raw' JSON. It will parse http request's Body
+// It will allow to send 'raw' JSON and will parse http request's Body
 app.use(express.json())
 
 // To accept URL encoded form
 app.use(express.urlencoded({ extended: false }))
 
-// Creating Routes
+// Root Route
 app.get('/', (req, res) => {
   res.status(200).json({ message: 'Membership-System API' })
 })

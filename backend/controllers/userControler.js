@@ -25,7 +25,15 @@ const createJWToken = (id) => {
 // Route Access: Public
 const registerUser = asyncHandler(async (req, res) => {
   // Destrucutring Request's Body
-  const { name, email, password, wallet } = req.body
+  const {
+    name,
+    email,
+    password,
+    wallet,
+    mobileNumber,
+    employeeId,
+    cardNumber,
+  } = req.body
 
   // Field validation
   if (!name) {
@@ -60,6 +68,9 @@ const registerUser = asyncHandler(async (req, res) => {
     email,
     password: hashedPassword,
     wallet,
+    mobileNumber,
+    employeeId,
+    cardNumber,
   })
 
   if (user) {
@@ -71,6 +82,10 @@ const registerUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       token: createJWToken(user._id),
+      cardNumber: user.cardNumber,
+      wallet: user.wallet,
+      employeeId: user.employeeId,
+      mobileNumber: user.mobileNumber,
     })
   } else {
     res.status(400)
@@ -93,6 +108,10 @@ const loginUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       token: createJWToken(user._id),
+      mobileNumber: user.mobileNumber,
+      employeeId: user.employeeId,
+      wallet: user.wallet,
+      cardNumber: user.cardNumber,
     })
   } else {
     // 401 Unauthorized response status code indicates that the client request has not been completed because it lacks valid authentication credentials for the requested resource.
@@ -129,6 +148,10 @@ const getCurrentUser = asyncHandler(async (req, res) => {
     id: req.user._id,
     email: req.user.email,
     name: req.user.name,
+    mobileNumber: req.user.mobileNumber,
+    employeeId: req.user.employeeId,
+    wallet: req.user.wallet,
+    cardNumber: req.user.cardNumber,
   }
 
   res.status(200).json(user)
