@@ -14,9 +14,6 @@ const {
 
 const { protector, adminRestricted } = require('../middleware/authHandler')
 
-// To protect a route (make it private), adding middleware 'protector'.
-// To restrict route for Admin use, adding middleware 'adminRestricted'.
-
 // Register route
 router.post('/', registerUser)
 
@@ -27,9 +24,10 @@ router.post('/login', loginUser)
 router.put('/me/pay', protector, pay)
 
 // Route to get currently logged in User
+// To make a route 'protected' (private) adding middleware 'protector' as a second argument
 router.get('/me', protector, getCurrentUser)
 
-// Top-up money account
+// Top up money account
 router.put('/:id/top-up', adminRestricted, topUp)
 
 // Get User by ID

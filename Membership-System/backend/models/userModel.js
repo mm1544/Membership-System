@@ -1,7 +1,7 @@
 // Schema for database User
 const mongoose = require('mongoose')
 
-// Shema is taking-in an object of fields
+// Shema will is taking-in an object of fields
 const userSchema = mongoose.Schema(
   {
     name: {
@@ -40,8 +40,8 @@ const userSchema = mongoose.Schema(
       minLength: 16,
     },
 
-    // Money account
     wallet: {
+      // type: Double,
       type: Number,
       required: false,
       // Initially wallet is empty

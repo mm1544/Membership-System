@@ -228,7 +228,7 @@ const topUp = asyncHandler(async (req, res) => {
 
 // Description: Pay money
 // Route: PUT /api/users/me/pay
-// Route Access: Protected
+// Route Access: Restricted access to Admin
 const pay = asyncHandler(async (req, res) => {
   try {
     const user = await User.findById(req.user._id)
