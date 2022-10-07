@@ -178,6 +178,62 @@ const updateUser = asyncHandler(async (req, res) => {
   }
 })
 
+// Description: Top-up money account
+// Route: PUT /api/users/:id/top-up
+// Route Access: Restricted access to Admin
+const topUp = asyncHandler(async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id)
+
+    if (!user) {
+      res.status(401)
+      throw new Error('User not found')
+    }
+    newAmount = Number(user.wallet) + Number(req.body.wallet)
+    req.body.wallet = newAmount
+
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    })
+
+    res.status(200).json(updatedUser)
+  } catch (error) {
+    res.status(401)
+    throw new Error(`${error}`)
+  }
+})
+
+// Description: Pay money
+// Route: PUT /api/users/me/pay
+// Route Access: Restricted access to Admin
+const pay = asyncHandler(async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id)
+
+    if (!user) {
+      res.status(401)
+      throw new Error('User not found')
+    }
+
+    if (Number(user.wallet) < Number(req.body.wallet)) {
+      res.status(401)
+      throw new Error('Not sufficient funds')
+    }
+
+    newAmount = Number(user.wallet) - Number(req.body.wallet)
+    req.body.wallet = newAmount
+
+    const updatedUser = await User.findByIdAndUpdate(req.user._id, req.body, {
+      new: true,
+    })
+
+    res.status(200).json(updatedUser)
+  } catch (error) {
+    res.status(401)
+    throw new Error(`${error}`)
+  }
+})
+
 module.exports = {
   registerUser,
   loginUser,
@@ -185,6 +241,8 @@ module.exports = {
   getCurrentUser,
   updateUser,
   deleteUser,
+  topUp,
+  pay,
 }
 
 // TO DO: Will add data to the http request's Body to send when register and login routes are trigered.

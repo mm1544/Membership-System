@@ -8,6 +8,8 @@ const {
   getCurrentUser,
   updateUser,
   deleteUser,
+  topUp,
+  pay,
 } = require('../controllers/userControler')
 
 const { protector, adminRestricted } = require('../middleware/authHandler')
@@ -18,9 +20,15 @@ router.post('/', registerUser)
 // Login route
 router.post('/login', loginUser)
 
+// Pay
+router.put('/me/pay', protector, pay)
+
 // Route to get currently logged in User
 // To make a route 'protected' (private) adding middleware 'protector' as a second argument
 router.get('/me', protector, getCurrentUser)
+
+// Top up money account
+router.put('/:id/top-up', adminRestricted, topUp)
 
 // Get User by ID
 router.get('/:id', adminRestricted, getUserById)
